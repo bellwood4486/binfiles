@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# variables
+app_name=$1
+bundle_relative_path=vendor/bundle
+rails_version=5.2.1
+ruby_version=$(rbenv global)
+
+# app directory
+mkdir $app_name
+cd $app_name
+
+# files
+cat << EOG > Gemfile
+source "http://rubygems.org"
+gem "rails", "$rails_version" #利用するバージョンを指定する
+EOG
+rbenv local $ruby_version
+
+# bundle
+bundle install --path $bundle_relative_path
+bundle exec rails new . --force ${@:2}
+
+# git
+cat << EOS >> .gitignore
+
+# Ignore bundler gems.
+$bundle_relative_path
+EOS
+
+# setup
+bundle_relative_path_sed=$(echo $bundle_relative_path | sed "s/\//\\\\\\//")
+sed -i '' -e "s/\(bundle *install\)/\1 --path $bundle_relative_path_sed/g" bin/setup
+sed -i '' -e "s/\(bundle *install\)/\1 --path $bundle_relative_path_sed/g" bin/update
+
