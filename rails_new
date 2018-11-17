@@ -1,20 +1,22 @@
 #!/bin/bash
 
-# variables
-app_name=$1
-rails_version=5.2.1
-ruby_version=$(rbenv global)
+# constants
+readonly SCRIPT_DIR=$(cd $(dirname $0) && pwd)
+readonly SETUP_FILE_DIR=$SCRIPT_DIR/rails_new
+readonly APP_NAME=$1
+readonly RAILS_VERSION=5.2.1
+readonly RUBY_VERSION=$(rbenv global)
 
 # app directory
-mkdir $app_name
-cd $app_name
+mkdir $APP_NAME
+cd $APP_NAME
 
 # files
 cat << EOG > Gemfile
 source "http://rubygems.org"
-gem "rails", "$rails_version"
+gem "rails", "$RAILS_VERSION"
 EOG
-rbenv local $ruby_version
+rbenv local $RUBY_VERSION
 
 # bundle
 bundle install
