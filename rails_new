@@ -96,8 +96,13 @@ Time::DATE_FORMATS[:long] = ->(time) { I18n.l(time, format: :long) }
 Time::DATE_FORMATS[:short] = ->(time) { I18n.l(time, format: :short) }
 EOS
 
-cat << EOS > TODO.txt
+cat << EOS > TODO.md
+# セットアップ TODO
+
 ## Gemfileを整理
+1. コメント削除
+1. 任意のgemを使うか決める
+1. gem定義の並び替え
 
 ## bootstrapの設定
 https://github.com/twbs/bootstrap-rubygem
