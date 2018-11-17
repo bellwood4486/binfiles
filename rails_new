@@ -18,7 +18,7 @@ rbenv local $ruby_version
 
 # bundle
 bundle install
-bundle exec rails new . --force ${@:2}
+bundle exec rails new . --force --skip-test-unit ${@:2}
 
 # add gems
 cat << EOG >> Gemfile
@@ -47,7 +47,6 @@ group :development, :test do
   gem 'factory_bot_rails'
 end
 
-# dev
 group :development do
   gem 'rubocop'
   gem 'brakeman'
@@ -59,6 +58,7 @@ group :development do
   gem 'letter_opener'
 end
 EOG
+
 bundle install
 
 # create db
@@ -81,6 +81,26 @@ EOS
 HAML_RAILS_DELETE_ERB=true bin/rails haml:erb2haml <<-EOF
 y
 EOF
+
+# application.sass
+cat << EOS > app/assets/stylesheets/application.sass
+// Custom bootstrap variables must be set or imported *before* bootstrap.
+@import bootstrap
+@import font-awesome
+EOS
+rm -f app/assets/stylesheets/application.css
+
+# application.coffee
+cat << EOS > app/assets/javascripts/application.coffee
+#= require rails-ujs
+#= require activestorage
+#= require turbolinks
+#= require jquery3
+#= require popper
+#= require bootstrap-sprockets
+#= require_self
+EOS
+rm -f app/assets/javascripts/application.js
 
 # time_formats
 cat << EOS > config/initializers/time_formats.rb
