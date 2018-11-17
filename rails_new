@@ -44,6 +44,13 @@ HAML_RAILS_DELETE_ERB=true bin/rails haml:erb2haml <<-EOF
 y
 EOF
 
+# dotenv-rails
+cat << EOG >> .gitignore
+
+# Ignore dotenv file
+/.env
+EOG
+
 # application.sass
 cp $SETUP_FILES_DIR/application.sass app/assets/stylesheets
 rm -f app/assets/stylesheets/application.css
