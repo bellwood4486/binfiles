@@ -34,10 +34,17 @@
 .row.justify-content-center
   .col-6
     %h1 simple_formテスト
-    = simple_form_for :sample do |f|
-      = f.input :name, placeholder: 'This is placeholder.',
-        hint: 'これはヒントメッセージです'
-      = f.button :submit, class: 'btn-primary'
+    %p
+      %h2 simple_form_for
+      = simple_form_for :sample do |f|
+        = f.input :email, placeholder: 'sample@example.com',
+          hint: 'これはヒントメッセージです'
+        = f.button :submit, class: 'btn-primary'
+    %p
+      %h2 minimal_form_for
+      = minimal_form_for :sample do |f|
+        = f.input :email
+        = f.button :submit, class: 'btn-primary'
 
 .row.justify-content-center
   .col-6

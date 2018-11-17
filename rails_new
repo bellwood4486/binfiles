@@ -27,6 +27,8 @@ bundle install
 
 # simple_form
 bin/rails generate simple_form:install --bootstrap
+cp $SETUP_FILES_DIR/minimal_form_builder.rb lib
+cp $SETUP_FILES_DIR/minimal_form_helper.rb app/helpers
 
 # kaminari
 bin/rails generate kaminari:views bootstrap4 -e haml
