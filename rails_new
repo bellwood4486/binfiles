@@ -53,8 +53,11 @@ rm -f app/assets/javascripts/application.js
 # time_formats
 cp $SETUP_FILES_DIR/time_formats.rb config/initializers
 
+# deploy sample page
+bin/rails generate controller samples index --no-helper --no-assets --no-controller-specs --no-view-specs --no-helper-specs
+cp -f $SETUP_FILES_DIR/index.html.haml app/views/samples
+
 # TODO
-cp $SETUP_FILES_DIR/TODO.md ./
 echo ==============================
-cat TODO.md
+cat $SETUP_FILES_DIR/TODO.md
 echo ==============================

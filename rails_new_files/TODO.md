@@ -5,12 +5,6 @@
 1. 任意のgemを使うか決める
 1. gem定義の並び替え
 
-## bootstrapの設定
-https://github.com/twbs/bootstrap-rubygem
-
-## font-awesome-railsの設定
-https://github.com/bokmann/font-awesome-rails
-
 ## config/application.rbに以下を追加
 
 ```
@@ -26,3 +20,9 @@ https://github.com/bokmann/font-awesome-rails
     # Rack Dev Mark
     config.rack_dev_mark.enable = true
 ```
+
+## Gem設定の確認
+
+以下のURLにアクセスする
+html://localhost:3000/samples/index
+
