@@ -12,10 +12,110 @@ cd $app_name
 # files
 cat << EOG > Gemfile
 source "http://rubygems.org"
-gem "rails", "$rails_version" #利用するバージョンを指定する
+gem "rails", "$rails_version"
 EOG
 rbenv local $ruby_version
 
 # bundle
 bundle install
 bundle exec rails new . --force ${@:2}
+
+# add gems
+cat << EOG >> Gemfile
+gem 'bootstrap'
+gem 'devise'
+gem 'devise-i18n'
+gem 'font-awesome-rails'
+gem 'haml-rails'
+gem 'jquery-rails'
+gem 'kaminari'
+gem 'kaminari-bootstrap'
+gem 'rack-dev-mark'
+gem 'rails-i18n'
+gem 'simple_form'
+
+# gem 'pundit'
+# gem 'rolify'
+# gem 'carrierwave'
+# gem 'carrierwave-i18n'
+# gem 'fog-aws'
+# gem 'gon'
+# gem 'mini_magick'
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+end
+
+# dev
+group :development do
+  gem 'rubocop'
+  gem 'brakeman'
+  gem 'bundler-audit'
+  gem 'license_finder'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'bullet'
+  gem 'letter_opener'
+end
+EOG
+bundle install
+
+# create db
+bin/rails db:create
+
+# simple_form
+bin/rails generate simple_form:install --bootstrap
+
+# kaminari
+bin/rails generate kaminari:views bootstrap4 -e haml
+
+# rspec
+bin/rails generate rspec:install
+cat << EOS > .rspec
+--require spec_helper
+--format documentation
+EOS
+
+# haml-rails
+HAML_RAILS_DELETE_ERB=true bin/rails haml:erb2haml <<-EOF
+y
+EOF
+
+# time_formats
+cat << EOS > config/initializers/time_formats.rb
+# 日時のデフォルトフォーマットをl18nを前提としてフォーマットにする
+# See: https://api.rubyonrails.org/classes/DateTime.html#method-i-to_formatted_s
+# Date
+Date::DATE_FORMATS[:default] = ->(date) { I18n.l(date) }
+Date::DATE_FORMATS[:long] = ->(date) { I18n.l(date, format: :long) }
+Date::DATE_FORMATS[:short] = ->(date) { I18n.l(date, format: :short) }
+# Time
+Time::DATE_FORMATS[:default] = ->(time) { I18n.l(time) }
+Time::DATE_FORMATS[:long] = ->(time) { I18n.l(time, format: :long) }
+Time::DATE_FORMATS[:short] = ->(time) { I18n.l(time, format: :short) }
+EOS
+
+cat << EOS > TODO.txt
+## Gemfileを整理
+
+## bootstrapの設定
+https://github.com/twbs/bootstrap-rubygem
+
+## font-awesome-railsの設定
+https://github.com/bokmann/font-awesome-rails
+
+## config/application.rbに以下を追加
+
+    config.generators do |g|
+      g.test_framework :rspec,
+                       view_specs: false,
+                       helper_specs: false,
+                       routing_specs: false,
+                       request_specs: false
+    end
+
+    config.i18n.default_locale = :ja
+    # Rack Dev Mark
+    config.rack_dev_mark.enable = true
+EOS
