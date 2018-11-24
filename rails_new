@@ -51,6 +51,19 @@ cat << EOG >> .gitignore
 /.env
 EOG
 
+# sgcop(rubocop&haml-lint)
+gem install specific_install
+gem specific_install SonicGarden/sgcop
+cp $SETUP_FILES_DIR/.rubocop.yml .
+find $(gem environment gemdir)/gems -name "haml-lint.yml" -exec cp -f {} ./.haml-lint.yml \;
+rubocop -a
+
+# overcommit
+gem install overcommit
+overcommit --install
+cp -f $SETUP_FILES_DIR/.overcommit.yml .
+overcommit --sign
+
 # application.sass
 cp $SETUP_FILES_DIR/application.sass app/assets/stylesheets
 rm -f app/assets/stylesheets/application.css
