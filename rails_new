@@ -4,7 +4,7 @@
 readonly SCRIPT_DIR=$(cd $(dirname $0) && pwd)
 readonly SETUP_FILES_DIR=$SCRIPT_DIR/rails_new_files
 readonly APP_NAME=$1
-readonly RAILS_VERSION=5.2.1
+readonly RAILS_VERSION=5.2.2
 readonly RUBY_VERSION=$(rbenv global)
 
 # app directory

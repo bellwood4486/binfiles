@@ -23,6 +23,7 @@ PreCommit:
   HamlLint:
     enabled: true
     on_warn: fail
+    include: 'app/views/**/*.haml'
 
 CommitMsg:
   CapitalizedSubject:

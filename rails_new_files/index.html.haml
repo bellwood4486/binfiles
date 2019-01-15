@@ -4,7 +4,9 @@
     .container
       / Brand and toggle get grouped for better mobile display
       = link_to 'Gem設定確認用', '#', class: 'navbar-brand'
-      %button.navbar-toggler{type: 'button', 'data-toggle': 'collapse', 'data-target': '#main-navbar-collapse', 'aria-expanded': 'false', 'aria-label': 'ナビゲーションの切替' }
+      %button.navbar-toggler{type: 'button', 'data-toggle': 'collapse',
+      'data-target': '#main-navbar-collapse', 'aria-expanded': 'false',
+      'aria-label': 'ナビゲーションの切替' }
         %span.navbar-toggler-icon
 
       / Collect the nav links, forms, and other content for toggling
@@ -28,7 +30,7 @@
 .row.justify-content-center
   .col-6
     %h1 Kaminariテスト
-    - samples = Kaminari.paginate_array(10.times.map { |i| "サンプル#{i}" }).page(2).per(3)
+    - samples = Kaminari.paginate_array(Array.new(10) { |i| "サンプル#{i}" }).page(2).per(3)
     = paginate samples
 
 .row.justify-content-center
@@ -49,4 +51,4 @@
 .row.justify-content-center
   .col-6
     %h1 time_formatsテスト
-    %p= DateTime.now
+    %p= Time.zone.now
